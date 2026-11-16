@@ -1,9 +1,7 @@
 /* mbstowcs(), wcstombs() and wctomb() for Latin-1, the Amiga's own
- * character set. libnix's mbstowcs() and wcstombs() stop early when given
- * a limit of one byte a character, which is what Einstein's fromMbcs() and
- * toMbcs() pass, so resource names, paths and messages came out cut short
- * ("Resou" for "Resource 'cursor.bmp' not found"). These convert every
- * character up to the limit; a wide character past 255 can't be written.
+ * character set: one byte is one character, so every character up to the
+ * limit converts and a wide character past 255 can't be written. Einstein's
+ * fromMbcs() and toMbcs() use these for resource names, paths and messages.
  * Copyright (c) 2026 AmiCradle Team. GPL 2 or later, like Einstein. */
 #include <stdlib.h>
 #include <wchar.h>

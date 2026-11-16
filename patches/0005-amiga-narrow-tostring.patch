@@ -14,7 +14,7 @@ index 6314928..59a4fce 100644
                  + L" to string");
      return o.str();
  #else   // Mingw doesn't support std::wostringstream yet :-(
-+        // (nor libnix: the wide number output there never returns)
++        // (the Amiga takes this path too: narrow streams, then fromMbcs)
      std::ostringstream o;
      if (! (o << x))
          throw Exception(L"Can't convert " + fromMbcs(typeid(x).name()) 
