@@ -1,0 +1,20 @@
+diff --git a/convert.h b/convert.h
+index 6314928..59a4fce 100644
+--- a/convert.h
++++ b/convert.h
+@@ -16,13 +16,14 @@
+ template <typename T>
+ inline std::wstring toString(const T &x)
+ {
+-#ifndef WIN32
++#if !defined(WIN32) && !defined(__amigaos__)
+     std::wostringstream o;
+     if (! (o << x))
+         throw Exception(L"Can't convert " + fromMbcs(typeid(x).name())
+                 + L" to string");
+     return o.str();
+ #else   // Mingw doesn't support std::wostringstream yet :-(
++        // (nor libnix: the wide number output there never returns)
+     std::ostringstream o;
+     if (! (o << x))
+         throw Exception(L"Can't convert " + fromMbcs(typeid(x).name()) 

@@ -1,0 +1,27 @@
+diff --git a/storage.cpp b/storage.cpp
+index ff2b6b3..6e19300 100644
+--- a/storage.cpp
++++ b/storage.cpp
+@@ -38,6 +38,16 @@ StorageHolder::~StorageHolder()
+ }
+ 
+ 
++#ifdef __amigaos__
++// Made on first use, in main(): TableStorage throws when PROGDIR:User/einsteinrc
++// is missing (the first start), and an exception thrown by a static
++// constructor can come before libgcc has its unwind tables, which aborts.
++Storage* getStorage()
++{
++    static StorageHolder storageHolder;
++    return storageHolder.getStorage();
++}
++#else
+ static StorageHolder storageHolder;
+ 
+ 
+@@ -45,4 +55,5 @@ Storage* getStorage()
+ {
+     return storageHolder.getStorage();
+ }
++#endif
+ 

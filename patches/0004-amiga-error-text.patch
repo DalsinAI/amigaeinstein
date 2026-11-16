@@ -1,0 +1,23 @@
+diff --git a/main.cpp b/main.cpp
+index d103861..cf76ce8 100644
+--- a/main.cpp
++++ b/main.cpp
+@@ -102,9 +102,18 @@ int main(int argc, char *argv[])
+         menu();
+         getStorage()->flush();
+     } catch (Exception &e) {
++#ifdef __amigaos__
++        // a narrow stream: wide text here prints as an address
++        std::cerr << "ERROR: " << toMbcs(e.getMessage()) << std::endl;
++#else
+         std::cerr << L"ERROR: " << e.getMessage() << std::endl;
++#endif
+     } catch (...) {
++#ifdef __amigaos__
++        std::cerr << "ERROR: Unknown exception" << std::endl;
++#else
+         std::cerr << L"ERROR: Unknown exception" << std::endl;
++#endif
+     }
+     screen.doneCursors();
+     
