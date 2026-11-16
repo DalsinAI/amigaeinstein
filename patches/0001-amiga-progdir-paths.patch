@@ -1,0 +1,60 @@
+diff --git a/main.cpp b/main.cpp
+index d103861..8732912 100644
+--- a/main.cpp
++++ b/main.cpp
+@@ -63,10 +63,14 @@ static void loadResources(const std::wstring &selfPath)
+ #else
+ #ifdef __APPLE__
+     dirs.push_back(getResourcesPath(selfPath));
++#else
++#ifdef __amigaos__
++    dirs.push_back(L"PROGDIR:res");
+ #else
+     dirs.push_back("/usr" L"/share/einstein/res");
+     dirs.push_back(fromMbcs(getenv("HOME")) + L"/.einstein/res");
+ #endif
++#endif
+ #endif
+     dirs.push_back(L"res");
+     dirs.push_back(L".");
+@@ -90,7 +94,9 @@ static void loadResources(const std::wstring &selfPath)
+ 
+ int main(int argc, char *argv[])
+ {
+-#ifndef WIN32
++#ifdef __amigaos__
++    ensureDirExists(L"PROGDIR:User");
++#elif !defined(WIN32)
+     ensureDirExists(fromMbcs(getenv("HOME")) + std::wstring(L"/.einstein"));
+ #endif
+     
+diff --git a/opensave.cpp b/opensave.cpp
+index ad6dc36..13d9317 100644
+--- a/opensave.cpp
++++ b/opensave.cpp
+@@ -139,7 +139,9 @@ class SaveCommand: public Command
+ 
+ static std::wstring getSavesPath()
+ {
+-#ifndef WIN32
++#ifdef __amigaos__
++    std::wstring path(L"PROGDIR:User/save");
++#elif !defined(WIN32)
+     std::wstring path(fromMbcs(getenv("HOME")) + 
+             std::wstring(L"/.einstein/save"));
+ #else
+diff --git a/tablestorage.cpp b/tablestorage.cpp
+index 2c25808..aff0aea 100644
+--- a/tablestorage.cpp
++++ b/tablestorage.cpp
+@@ -24,7 +24,9 @@ TableStorage::~TableStorage()
+ 
+ std::wstring TableStorage::getFileName()
+ {
+-#ifndef WIN32
++#ifdef __amigaos__
++    return L"PROGDIR:User/einsteinrc";
++#elif !defined(WIN32)
+     return std::wstring(fromMbcs(getenv("HOME"))) + L"/.einstein/einsteinrc";
+ #else
+     return L"einstein.cfg";

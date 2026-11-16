@@ -1,0 +1,10 @@
+# What this port builds on: fetched at build time, never kept here.
+# Einstein 2.0 (GPL 2), Alexander Babichev's puzzle, lksj/einstein-puzzle
+# master db34f7a (28 Nov 2015); its pictures, sounds and fonts are packed
+# in the repository's einstein.res
+EIN_GIT=https://github.com/lksj/einstein-puzzle.git
+EIN_COMMIT=db34f7a51c174095dda31f54ecbbd4f1a325e16a
+EIN_VERSION=2.0
+# SDL 2, SDL2_ttf and SDL2_mixer are the stove's (GFOpenGPU's link stubs;
+# SDL2_ttf is linked in); zlib is the stove's port-deps libz.a. At run time
+# SDL is the GFOpenGPU part's SDL2.module and SDL2_mixer.module

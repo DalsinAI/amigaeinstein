@@ -1,0 +1,22 @@
+diff --git a/widgets.cpp b/widgets.cpp
+index 7730ee7..70f7635 100644
+--- a/widgets.cpp
++++ b/widgets.cpp
+@@ -283,7 +283,7 @@ void Area::handleEvent(const SDL_Event &event)
+         case SDL_KEYDOWN:
+             for (WidgetsList::iterator i = widgets.begin(); i != widgets.end(); i++)
+                 if ((*i)->onKeyDown(event.key.keysym.sym, 
+-                            (unsigned char)event.key.keysym.unicode))
++                            sdl12on2_char(&event.key.keysym)))
+                     return;
+             break;
+         
+@@ -392,7 +392,7 @@ AnyKeyAccel::~AnyKeyAccel()
+ 
+ bool AnyKeyAccel::onKeyDown(SDLKey key, unsigned char ch)
+ {
+-    if (((key >= SDLK_NUMLOCK) && (key <= SDLK_COMPOSE)) || 
++    if (sdl12on2_is_modifier(key) || 
+             (key == SDLK_TAB) || (key == SDLK_UNKNOWN))
+         return false;
+ 
